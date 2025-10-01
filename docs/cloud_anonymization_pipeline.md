@@ -8,6 +8,7 @@ A cloud-based anonymization pipeline receives DICOM studies from healthcare part
    - Supports DICOMweb `STOW-RS`, VPN file drops, or secure upload portals.
    - Performs checksum validation and schema inspection as soon as a study arrives.
    - Stores inbound objects in an isolated quarantine bucket (e.g., Amazon S3 with bucket policies or Azure Blob Storage with SAS tokens).
+   - Emits queue messages (SQS, Pub/Sub, or Event Grid) so downstream services can process studies asynchronously.
 
 2. **Metadata De-identification Service**
    - Applies DICOM PS3.15 Appendix E or locally customised rule sets.
@@ -57,3 +58,33 @@ A cloud-based anonymization pipeline receives DICOM studies from healthcare part
 - A reproducible workflow that ingests, de-identifies, validates, and distributes DICOM studies.
 - Compliance artefacts and audit logs required for HIPAA, GDPR, or local regulations.
 - Secure storage endpoints and APIs for downstream research, AI development, and multi-site collaborations.
+
+## Building the First Layer: Secure Ingestion
+
+The ingestion layer is the security and reliability anchor for the remainder of the pipeline. A minimal cloud-native implementation can be assembled with the following building blocks:
+
+1. **Network Entry Points**
+   - Deploy a DICOMweb gateway (e.g., Orthanc with the DICOMweb plugin or a managed PACS router) behind an HTTPS load balancer.
+   - Terminate TLS with certificates issued by a private CA, and enforce mutual TLS or signed URLs when collaborating with external sites.
+   - Provide a fallback secure file transfer method (SFTP/Aspera) when legacy modalities cannot push over DICOMweb.
+
+2. **Landing Zone Storage**
+   - Create a dedicated object store bucket or container with bucket policies that only allow writes from the gateway service account.
+   - Enable object-lock or immutable retention windows to prevent tampering with inbound artefacts.
+   - Configure server-side encryption with customer-managed keys and enforce TLS-only access policies.
+
+3. **Integrity and Schema Validation**
+   - Attach a serverless function or lightweight microservice that is invoked on every object creation event.
+   - Validate DICOM metadata using libraries such as `pydicom`, checking transfer syntax, modality type, and mandatory tags.
+   - Generate checksum manifests (MD5/SHA-256) and compare them with hashes provided by the sender when available.
+
+4. **Event Propagation**
+   - Publish a message to a durable queue (Amazon SQS, Google Pub/Sub, Azure Service Bus) containing the object location and minimal routing metadata (study UID, modality, facility ID).
+   - Use dead-letter queues for malformed studies so operators can triage without blocking the happy-path flow.
+
+5. **Operational Guardrails**
+   - Instrument the gateway and validation services with structured logging, metrics, and distributed tracing.
+   - Configure alerting on failed uploads, repeated schema violations, or ingestion rate anomalies.
+   - Record partner-specific metadata (facility, contract ID, data use agreement) in a configuration database to drive policy-aware processing downstream.
+
+By standing up this first layer, the pipeline achieves secure hand-off from the external producers to the internal anonymisation services. Downstream de-identification and pixel-sanitisation components can safely consume studies from the queue knowing that every object has been validated, logged, and stored with the necessary compliance controls in place.
