@@ -2,6 +2,13 @@
 
 This plan translates the current Django scaffold into a production-ready ESG platform through phased, concrete deliverables.
 
+## Implementation Status (current)
+
+- ✅ Week 0 started: settings split (`base/dev/prod`), `.env.example`, and initial baseline structure are in place.
+- ✅ Week 1 started: API versioning (`/api/v1`), validation helpers, and standardized error responses are implemented.
+- ✅ Week 2 started: core persistence models, initial migration, repositories, and audit logging hooks are added.
+- ⏭️ Remaining items below are still planned and should be completed in subsequent iterations.
+
 ## 0) Immediate Baseline Hardening (Week 1)
 
 1. **Dependency and runtime stability**

@@ -1,11 +1,12 @@
 # Gexable ESG Starter Code (Django Base)
 
-This starter package now uses a Django base application for ESG APIs:
+This starter package uses a Django base application for ESG APIs, now with baseline hardening and early persistence groundwork:
 
-- Django project scaffold at `gexable_esg/apps/django_project`.
-- API endpoints for data intake, emissions, reporting, and event audit.
-- Service classes for each major ESG module section.
-- In-memory event bus with versioned domain events.
+- Split environment-aware settings (`base/dev/prod`) and `.env.example`.
+- Versioned API routes under `/api/v1`.
+- Input validation + standardized error responses.
+- Initial persistence models and repositories for core ESG domain objects.
+- In-memory event bus retained for event-driven service flow.
 
 ## Run locally
 
@@ -16,19 +17,13 @@ python gexable_esg/apps/django_project/manage.py runserver
 
 ## API endpoints
 
-- `GET /api/health`
-- `POST /api/activity-records`
-- `POST /api/emissions/calculate`
-- `POST /api/disclosures/publish`
-- `GET /api/audit/events`
+- `GET /api/v1/health`
+- `POST /api/v1/activity-records`
+- `POST /api/v1/emissions/calculate`
+- `POST /api/v1/disclosures/publish`
+- `GET /api/v1/audit/events`
 
-## Next implementation steps
-
-1. Replace in-memory stores with repositories and PostgreSQL models.
-2. Add authentication and tenant context middleware.
-3. Introduce background workers for heavy ingestion and calculations.
-4. Add framework-specific disclosure renderers.
-
+> Note: persistence for `activity-records` and `emissions/calculate` requires numeric DB foreign keys (`site_id`, `activity_record_id`) to store records.
 
 ## Development plan
 

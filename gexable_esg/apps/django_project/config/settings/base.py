@@ -1,10 +1,11 @@
+import os
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parents[2]
 
-SECRET_KEY = "gexable-esg-dev-key"
-DEBUG = True
-ALLOWED_HOSTS: list[str] = ["*"]
+SECRET_KEY = os.getenv("GEXABLE_SECRET_KEY", "gexable-esg-dev-key")
+DEBUG = os.getenv("GEXABLE_DEBUG", "false").lower() == "true"
+ALLOWED_HOSTS = [h.strip() for h in os.getenv("GEXABLE_ALLOWED_HOSTS", "*").split(",") if h.strip()]
 
 INSTALLED_APPS = [
     "django.contrib.contenttypes",
@@ -40,7 +41,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": os.getenv("GEXABLE_DB_NAME", str(BASE_DIR / "db.sqlite3")),
     }
 }
 
