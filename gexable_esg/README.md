@@ -28,3 +28,14 @@ python gexable_esg/apps/django_project/manage.py runserver
 ## Development plan
 
 See `docs/gexable_esg_next_actions.md` for phased next actions and MVP backlog.
+
+
+## Working demo
+
+Run a complete in-memory demo flow (ingestion → emissions → disclosure → governance event):
+
+```bash
+python -m gexable_esg.demo.run_demo
+```
+
+This prints a JSON payload with created artifacts and emitted domain events.

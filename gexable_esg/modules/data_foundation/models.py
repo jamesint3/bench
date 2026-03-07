@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 
 
 @dataclass(slots=True)
@@ -29,5 +29,5 @@ def build_activity_record(record_id: str, payload: dict) -> ActivityRecord:
         quantity=float(payload["quantity"]),
         unit=payload.get("unit", "kWh"),
         source_type=payload.get("source_type", "manual_upload"),
-        recorded_at=datetime.now(UTC),
+        recorded_at=datetime.now(timezone.utc),
     )

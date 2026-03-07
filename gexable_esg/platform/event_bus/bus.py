@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 from typing import Any
 
 
@@ -9,7 +9,7 @@ from typing import Any
 class DomainEvent:
     topic: str
     payload: dict[str, Any]
-    occurred_at: datetime = field(default_factory=lambda: datetime.now(UTC))
+    occurred_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     schema_version: str = "v1"
 
     def model_dump(self) -> dict[str, Any]:

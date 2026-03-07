@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 
 
 @dataclass(slots=True)
@@ -26,5 +26,5 @@ def build_disclosure_report(report_id: str, framework: str, period: str) -> Disc
         framework=framework,
         period=period,
         status="published",
-        published_at=datetime.now(UTC),
+        published_at=datetime.now(timezone.utc),
     )
