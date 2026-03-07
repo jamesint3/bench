@@ -28,3 +28,8 @@ python gexable_esg/apps/django_project/manage.py runserver
 2. Add authentication and tenant context middleware.
 3. Introduce background workers for heavy ingestion and calculations.
 4. Add framework-specific disclosure renderers.
+
+
+## Development plan
+
+See `docs/gexable_esg_next_actions.md` for phased next actions and MVP backlog.
