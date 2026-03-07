@@ -19,6 +19,7 @@ classifiers = [
     "Topic :: System :: Installation/Setup",
 ]
 dependencies = [
+    "Django>=4.2,<6",
     "Click>=7.0",
     "GitPython~=2.1.15",
     "honcho",
