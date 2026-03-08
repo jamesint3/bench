@@ -23,9 +23,12 @@ def test_compose_includes_timescaledb_service() -> None:
 
 def test_runtime_bootstrap_runs_migrate_and_sql_artifacts() -> None:
     script = BOOTSTRAP_SCRIPT.read_text()
+    assert "manage.py migrate users" in script
     assert "manage.py migrate --run-syncdb" in script
     assert "manage.py apply_sql_artifacts" in script
     assert "wait_for_db.py" in script
+
+    assert script.index("manage.py migrate users") < script.index("manage.py migrate --run-syncdb")
 
 
 def test_apply_sql_artifacts_skips_timescaledb_when_unavailable() -> None:
