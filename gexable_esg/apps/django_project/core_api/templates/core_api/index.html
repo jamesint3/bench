@@ -1,0 +1,15 @@
+{% extends "core_api/base.html" %}
+{% block title %}Gexable ESG Demo UI{% endblock %}
+{% block content %}
+<h1>Gexable ESG — Demo UI</h1>
+<p class="muted">Navigate across current functions and admin portal pages.</p>
+
+<div class="grid3">
+  <div class="card"><h3>Data Intake</h3><p>Capture activity records.</p><a href="/ui/data-intake">Open page →</a></div>
+  <div class="card"><h3>Emissions</h3><p>Calculate Scope emissions.</p><a href="/ui/emissions">Open page →</a></div>
+  <div class="card"><h3>Disclosures</h3><p>Publish disclosure reports.</p><a href="/ui/disclosures">Open page →</a></div>
+  <div class="card"><h3>Event Stream</h3><p>Inspect published domain events.</p><a href="/ui/events">Open page →</a></div>
+  <div class="card"><h3>Health</h3><p>API heartbeat/status.</p><a href="/ui/health">Open page →</a></div>
+  <div class="card"><h3>Admin Portal</h3><p>Admin tools and Django admin access.</p><a href="/ui/admin-portal">Open page →</a></div>
+</div>
+{% endblock %}

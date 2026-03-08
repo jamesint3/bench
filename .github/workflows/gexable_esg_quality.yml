@@ -1,0 +1,35 @@
+name: gexable-esg-quality
+
+on:
+  push:
+    paths:
+      - "gexable_esg/**"
+      - "pyproject.toml"
+      - ".github/workflows/gexable_esg_quality.yml"
+  pull_request:
+    paths:
+      - "gexable_esg/**"
+      - "pyproject.toml"
+      - ".github/workflows/gexable_esg_quality.yml"
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+      - name: Lint
+        run: |
+          ruff check gexable_esg
+      - name: Type check
+        run: |
+          mypy gexable_esg
+      - name: Tests
+        run: |
+          pytest gexable_esg/tests

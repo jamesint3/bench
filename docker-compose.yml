@@ -1,0 +1,50 @@
+services:
+  timescaledb:
+    image: timescale/timescaledb:2.16.1-pg16
+    container_name: gexable-timescaledb
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      POSTGRES_DB: gexable_esg
+      POSTGRES_USER: gexable
+      POSTGRES_PASSWORD: gexable
+    volumes:
+      - gexable_timescaledb_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gexable -d gexable_esg"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  gexable-esg-demo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gexable-esg-demo
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      PYTHONPATH: "/app"
+      GEXABLE_SECRET_KEY: "${GEXABLE_SECRET_KEY:-local-demo-secret}"
+      GEXABLE_DEBUG: "${GEXABLE_DEBUG:-true}"
+      GEXABLE_ALLOWED_HOSTS: "${GEXABLE_ALLOWED_HOSTS:-localhost,127.0.0.1,host.docker.internal}"
+      GEXABLE_DB_ENGINE: "postgresql"
+      GEXABLE_DB_HOST: "${GEXABLE_DB_HOST:-timescaledb}"
+      GEXABLE_DB_PORT: "${GEXABLE_DB_PORT:-5432}"
+      GEXABLE_DB_NAME: "${GEXABLE_DB_NAME:-gexable_esg}"
+      GEXABLE_DB_USER: "${GEXABLE_DB_USER:-gexable}"
+      GEXABLE_DB_PASSWORD: "${GEXABLE_DB_PASSWORD:-gexable}"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health', timeout=5)"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  gexable_timescaledb_data:
