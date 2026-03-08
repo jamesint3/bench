@@ -1,0 +1,92 @@
+{
+  "emissions-overview": {
+    "filters": {
+      "period": "current",
+      "site": "all"
+    },
+    "summary": {
+      "total_emissions_tco2e": "116.980000",
+      "scope1_tco2e": "9.100000",
+      "scope2_tco2e": "32.680000",
+      "scope3_tco2e": "75.200000"
+    }
+  },
+  "scope-trends": {
+    "filters": {
+      "period": "12m",
+      "site": "all"
+    },
+    "trend": [
+      {
+        "year": 2026,
+        "month": 1,
+        "scope": "scope2",
+        "total": "32.680000"
+      }
+    ]
+  },
+  "energy-by-site": {
+    "filters": {
+      "period": "current"
+    },
+    "sites": [
+      {
+        "site__name": "Berlin Plant",
+        "energy_kwh": "86000.000000",
+        "cost_amount": "13350.00"
+      }
+    ]
+  },
+  "tariff-analysis": {
+    "filters": {
+      "period": "current"
+    },
+    "cost_breakdown": {
+      "total_cost": "13350.00"
+    }
+  },
+  "renewable-performance": {
+    "filters": {
+      "period": "current"
+    },
+    "assets": [
+      {
+        "asset__name": "Roof PV",
+        "generation_kwh": "16200.000000"
+      }
+    ]
+  },
+  "decarbonization-projects": {
+    "filters": {
+      "period": "current"
+    },
+    "projects": [
+      {
+        "name": "Heat Pump Retrofit",
+        "status": "in_progress"
+      }
+    ]
+  },
+  "supplier-benchmarking": {
+    "filters": {
+      "period": "current"
+    },
+    "suppliers": [
+      {
+        "supplier__name": "Eco Logistics GmbH",
+        "peer_percentile": "74.00"
+      }
+    ]
+  },
+  "audit-actions": {
+    "filters": {
+      "period": "current"
+    },
+    "actions": [
+      {
+        "status": "in_progress",
+        "total": 1
+      }
+    ]
+  }
+}
