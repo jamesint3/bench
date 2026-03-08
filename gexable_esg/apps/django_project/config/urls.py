@@ -13,6 +13,13 @@ urlpatterns = [
     path("ui/admin-portal", views.ui_admin_portal, name="ui-admin-portal"),
     path("admin/", admin.site.urls),
     path("api/v1/", include("core_api.urls")),
+    path("api/auth/", include("apps.users.urls")),
+    path("api/tenants/", include("apps.tenants.urls")),
     path("api/dashboard/", include("apps.dashboard_api.urls")),
     path("api/emissions/", include("apps.emissions_management.urls")),
+    path("api/", include("apps.energy_management.urls")),
+    path("api/", include("apps.supplier_intelligence.urls")),
+    path("api/", include("apps.decarbonization.urls")),
+    path("api/", include("apps.audits_actions.urls")),
+    path("api/", include("apps.data_ingestion.urls")),
 ]
