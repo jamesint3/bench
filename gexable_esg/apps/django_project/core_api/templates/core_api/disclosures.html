@@ -1,0 +1,20 @@
+{% extends "core_api/base.html" %}
+{% block content %}
+<h1>Disclosures</h1>
+<div class="card">
+  <select id="framework">
+    <option>CSRD</option><option>ISSB</option><option>GRI</option><option>CDP</option><option>SEC</option>
+  </select>
+  <input id="period" value="2026-Q1" placeholder="period" />
+  <button id="submit">Publish Disclosure</button>
+</div>
+<div class="card"><pre id="out"></pre></div>
+<script>
+const out=document.getElementById('out');
+document.getElementById('submit').onclick=async()=>{
+ const payload={framework:framework.value,period:period.value};
+ const res=await fetch('/api/v1/disclosures/publish',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+ out.textContent=JSON.stringify(await res.json(),null,2);
+};
+</script>
+{% endblock %}
