@@ -1,0 +1,18 @@
+{% extends "core_api/base.html" %}
+{% block content %}
+<h1>Emissions Calculation</h1>
+<div class="card">
+  <input id="quantity" value="1200" placeholder="quantity" />
+  <input id="scope" value="scope2" placeholder="scope" />
+  <button id="submit">Calculate</button>
+</div>
+<div class="card"><pre id="out"></pre></div>
+<script>
+const out=document.getElementById('out');
+document.getElementById('submit').onclick=async()=>{
+ const payload={quantity:Number(quantity.value),scope:scope.value};
+ const res=await fetch('/api/v1/emissions/calculate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+ out.textContent=JSON.stringify(await res.json(),null,2);
+};
+</script>
+{% endblock %}

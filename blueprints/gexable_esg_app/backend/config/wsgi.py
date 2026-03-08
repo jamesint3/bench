@@ -1,0 +1,1 @@
+"""Blueprint WSGI config placeholder."""

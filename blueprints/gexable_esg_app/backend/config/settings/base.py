@@ -1,0 +1,1 @@
+"""Blueprint base settings placeholder."""
