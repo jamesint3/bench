@@ -136,8 +136,12 @@ def list_events(_request: HttpRequest) -> JsonResponse:
     return JsonResponse({"events": [e.model_dump() for e in bus.events]})
 
 
+def frontend_app(request: HttpRequest):
+    return render(request, "core_api/frontend_app.html")
+
+
 def home(request: HttpRequest):
-    return render(request, "core_api/index.html")
+    return frontend_app(request)
 
 
 def ui_data_intake(request: HttpRequest):

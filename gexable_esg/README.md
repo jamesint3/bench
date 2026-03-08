@@ -93,13 +93,16 @@ docker compose up
 
 Then open:
 
-- UI Home: `http://localhost:8000/`
-- Data Intake UI: `http://localhost:8000/ui/data-intake`
-- Emissions UI: `http://localhost:8000/ui/emissions`
-- Disclosures UI: `http://localhost:8000/ui/disclosures`
-- Events UI: `http://localhost:8000/ui/events`
-- Health UI: `http://localhost:8000/ui/health`
-- Admin Portal UI: `http://localhost:8000/ui/admin-portal`
+- Main App (React): `http://localhost:8000/`
+- Emissions Page: `http://localhost:8000/emissions-overview`
+- Scope Trends: `http://localhost:8000/scope-trends`
+- Energy by Site: `http://localhost:8000/energy-by-site`
+- Tariff Analysis: `http://localhost:8000/tariff-analysis`
+- Renewable Performance: `http://localhost:8000/renewable-performance`
+- Decarbonization Projects: `http://localhost:8000/decarbonization-projects`
+- Supplier Benchmarking: `http://localhost:8000/supplier-benchmarking`
+- Audit Actions: `http://localhost:8000/audit-actions`
+- Legacy demo pages: `http://localhost:8000/demo/ui/data-intake` (and other `demo/ui/*` routes)
 - Django Admin: `http://localhost:8000/admin/`
 - API Health: `http://localhost:8000/api/v1/health`
 

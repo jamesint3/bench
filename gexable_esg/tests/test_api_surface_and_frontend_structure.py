@@ -81,3 +81,10 @@ def test_frontend_structure_files_exist() -> None:
     ]
     for file_path in expected_files:
         assert Path(file_path).exists()
+
+
+def test_frontend_routes_wired_in_main_urls() -> None:
+    source = URLS_FILE.read_text()
+    assert 'views.frontend_app' in source
+    assert 'emissions-overview' in source
+    assert 'demo/ui/data-intake' in source

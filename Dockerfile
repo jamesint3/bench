@@ -1,3 +1,11 @@
+FROM node:20-slim AS frontend-builder
+
+WORKDIR /frontend
+COPY frontend/package.json ./
+RUN npm install
+COPY frontend/ ./
+RUN npm run build
+
 FROM python:3.11-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -8,6 +16,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /app
 
 COPY . .
+COPY --from=frontend-builder /frontend/dist/assets /app/gexable_esg/apps/django_project/core_api/static/core_api/frontend/assets
 
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install --no-cache-dir . psycopg2-binary
