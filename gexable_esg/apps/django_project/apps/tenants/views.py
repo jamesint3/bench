@@ -2,13 +2,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.core.request_context import get_tenant_id
+from apps.users.authentication import AuthenticatedUserPermission, BearerTokenAuthentication
 
 from .models import Tenant
 
 
 class CurrentTenantView(APIView):
-    authentication_classes = []
-    permission_classes = []
+    authentication_classes = [BearerTokenAuthentication]
+    permission_classes = [AuthenticatedUserPermission]
 
     def get(self, request):
         tenant_id = get_tenant_id(request)

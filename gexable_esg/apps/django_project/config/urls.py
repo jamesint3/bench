@@ -22,4 +22,5 @@ urlpatterns = [
     path("api/", include("apps.decarbonization.urls")),
     path("api/", include("apps.audits_actions.urls")),
     path("api/", include("apps.data_ingestion.urls")),
+    path("api/reporting/", include("apps.reporting.urls")),
 ]
