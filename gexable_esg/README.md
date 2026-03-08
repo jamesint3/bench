@@ -149,9 +149,24 @@ GEXABLE_ALLOWED_HOSTS='localhost,127.0.0.1' \
 docker compose up --build --no-deps gexable-esg-demo
 ```
 
+On Windows `cmd.exe`, use quoted `set` syntax to avoid trailing spaces in env vars:
+
+```bat
+set "GEXABLE_DB_HOST=host.docker.internal" && ^
+set "GEXABLE_DB_PORT=5432" && ^
+set "GEXABLE_DB_USER=postgres" && ^
+set "GEXABLE_DB_PASSWORD=Polkmn001/*" && ^
+set "GEXABLE_DB_NAME=postgres" && ^
+set "GEXABLE_SECRET_KEY=replace-with-a-strong-secret" && ^
+set "GEXABLE_ALLOWED_HOSTS=localhost,127.0.0.1" && ^
+docker compose up --build --no-deps gexable-esg-demo
+```
+
 > Note: this compose file uses `/var/lib/postgresql` volume mounts (Postgres 18+ compatible) and no longer publishes TimescaleDB on host port `5432`, so it won't conflict with your existing container.
 
 > Note: if you previously initialized data with `/var/lib/postgresql/data` on newer Postgres images, create a fresh volume or perform a proper `pg_upgrade` migration before reusing data.
+
+> Note: if you see `could not translate host name "host.docker.internal "`, your env var likely contains a trailing space from `set VAR=value &&` usage in cmd; use `set "VAR=value"` as shown above.
 
 
 ## Dependency lock strategy

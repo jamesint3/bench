@@ -25,7 +25,7 @@ def test_runtime_bootstrap_runs_migrate_and_sql_artifacts() -> None:
 
 def test_settings_support_postgresql_engine_switch() -> None:
     source = SETTINGS_FILE.read_text()
-    assert 'DB_ENGINE = os.getenv("GEXABLE_DB_ENGINE", "sqlite3").lower()' in source
+    assert 'DB_ENGINE = _env("GEXABLE_DB_ENGINE", "sqlite3").lower()' in source
     assert '"ENGINE": "django.db.backends.postgresql"' in source
 
 

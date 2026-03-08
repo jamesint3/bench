@@ -6,11 +6,15 @@ import time
 import psycopg2
 
 
-host = os.getenv("GEXABLE_DB_HOST", "localhost")
-port = int(os.getenv("GEXABLE_DB_PORT", "5432"))
-dbname = os.getenv("GEXABLE_DB_NAME", "gexable_esg")
-user = os.getenv("GEXABLE_DB_USER", "gexable")
-password = os.getenv("GEXABLE_DB_PASSWORD", "gexable")
+def _env(name: str, default: str) -> str:
+    return os.getenv(name, default).strip()
+
+
+host = _env("GEXABLE_DB_HOST", "localhost")
+port = int(_env("GEXABLE_DB_PORT", "5432"))
+dbname = _env("GEXABLE_DB_NAME", "gexable_esg")
+user = _env("GEXABLE_DB_USER", "gexable")
+password = _env("GEXABLE_DB_PASSWORD", "gexable")
 
 for attempt in range(1, 31):
     try:

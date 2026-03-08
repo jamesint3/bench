@@ -3,14 +3,19 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 
-DEBUG = os.getenv("GEXABLE_DEBUG", "false").lower() == "true"
+
+def _env(name: str, default: str) -> str:
+    return os.getenv(name, default).strip()
+
+
+DEBUG = _env("GEXABLE_DEBUG", "false").lower() == "true"
 SECRET_KEY = os.getenv("GEXABLE_SECRET_KEY")
 if not SECRET_KEY:
     if DEBUG:
         SECRET_KEY = "gexable-esg-dev-key"
     else:
         raise RuntimeError("GEXABLE_SECRET_KEY must be set when DEBUG is false")
-ALLOWED_HOSTS = [h.strip() for h in os.getenv("GEXABLE_ALLOWED_HOSTS", "*").split(",") if h.strip()]
+ALLOWED_HOSTS = [h.strip() for h in _env("GEXABLE_ALLOWED_HOSTS", "*").split(",") if h.strip()]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -66,23 +71,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-DB_ENGINE = os.getenv("GEXABLE_DB_ENGINE", "sqlite3").lower()
+DB_ENGINE = _env("GEXABLE_DB_ENGINE", "sqlite3").lower()
 if DB_ENGINE in {"postgres", "postgresql", "timescaledb"}:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.getenv("GEXABLE_DB_NAME", "gexable_esg"),
-            "USER": os.getenv("GEXABLE_DB_USER", "gexable"),
-            "PASSWORD": os.getenv("GEXABLE_DB_PASSWORD", "gexable"),
-            "HOST": os.getenv("GEXABLE_DB_HOST", "localhost"),
-            "PORT": os.getenv("GEXABLE_DB_PORT", "5432"),
+            "NAME": _env("GEXABLE_DB_NAME", "gexable_esg"),
+            "USER": _env("GEXABLE_DB_USER", "gexable"),
+            "PASSWORD": _env("GEXABLE_DB_PASSWORD", "gexable"),
+            "HOST": _env("GEXABLE_DB_HOST", "localhost"),
+            "PORT": _env("GEXABLE_DB_PORT", "5432"),
         }
     }
 else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.getenv("GEXABLE_DB_NAME", str(BASE_DIR / "db.sqlite3")),
+            "NAME": _env("GEXABLE_DB_NAME", str(BASE_DIR / "db.sqlite3")),
         }
     }
 
