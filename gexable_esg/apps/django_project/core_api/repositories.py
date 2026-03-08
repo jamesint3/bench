@@ -1,6 +1,7 @@
+from datetime import timezone, datetime
 from decimal import Decimal
 
-from .models import ActivityRecord, AuditLog, DisclosureReport, EmissionResult, DomainEventOutbox
+from .models import ActivityRecord, AuditLog, DisclosureReport, DomainEventOutbox, EmissionResult
 
 
 class ActivityRecordRepository:
@@ -23,6 +24,9 @@ class ActivityRecordRepository:
             idempotency_key=idempotency_key,
         )
 
+    def for_tenant(self, tenant_id: str):
+        return ActivityRecord.objects.filter(tenant_id=tenant_id)
+
 
 class EmissionResultRepository:
     def create(
@@ -44,6 +48,9 @@ class EmissionResultRepository:
             factor_version=factor_version,
         )
 
+    def for_tenant(self, tenant_id: str):
+        return EmissionResult.objects.filter(tenant_id=tenant_id)
+
 
 class DisclosureRepository:
     def create(self, *, tenant_id: str, framework: str, period: str, status: str) -> DisclosureReport:
@@ -53,6 +60,9 @@ class DisclosureRepository:
             period=period,
             status=status,
         )
+
+    def for_tenant(self, tenant_id: str):
+        return DisclosureReport.objects.filter(tenant_id=tenant_id)
 
 
 class AuditLogRepository:
@@ -76,5 +86,15 @@ class DomainEventOutboxRepository:
             status="pending",
         )
 
+    def get_pending(self, *, batch_size: int = 100):
+        return DomainEventOutbox.objects.filter(status="pending").order_by("id")[:batch_size]
+
     def mark_published(self, event_id: int) -> None:
-        DomainEventOutbox.objects.filter(id=event_id).update(status="published")
+        DomainEventOutbox.objects.filter(id=event_id).update(
+            status="published",
+            published_at=datetime.now(timezone.utc),
+            error_message=None,
+        )
+
+    def mark_error(self, event_id: int, message: str) -> None:
+        DomainEventOutbox.objects.filter(id=event_id).update(status="error", error_message=message)

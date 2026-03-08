@@ -9,6 +9,7 @@ This plan translates the current Django scaffold into a production-ready ESG pla
 - ✅ Week 2 started: core persistence models, initial migration, repositories, and audit logging hooks are added.
 - ✅ Week 1 progressed: DRF APIViews, serializers, standardized validation responses, and OpenAPI/Swagger endpoints (`/api/v1/schema`, `/api/v1/docs`) are added.
 - ✅ Week 3 started: transactional outbox table (`DomainEventOutbox`) and repository stub for publish lifecycle are added.
+- ✅ Week 4 started: tenant context middleware, role-based API permissions, and outbox publisher management command are added.
 - ⏭️ Remaining items below are still planned and should be completed in subsequent iterations.
 
 ## 0) Immediate Baseline Hardening (Week 1)

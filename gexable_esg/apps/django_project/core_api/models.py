@@ -1,10 +1,15 @@
+from django.conf import settings
 from django.db import models
+
+from .tenant import TenantScopedManager
 
 
 class TenantStampedModel(models.Model):
     tenant_id = models.CharField(max_length=100, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    objects = TenantScopedManager()
 
     class Meta:
         abstract = True
@@ -64,3 +69,24 @@ class DomainEventOutbox(TenantStampedModel):
     schema_version = models.CharField(max_length=20, default="v1")
     status = models.CharField(max_length=20, default="pending", db_index=True)
     published_at = models.DateTimeField(null=True, blank=True)
+    error_message = models.TextField(null=True, blank=True)
+
+
+class UserRole(TenantStampedModel):
+    ROLE_PREPARER = "preparer"
+    ROLE_REVIEWER = "reviewer"
+    ROLE_APPROVER = "approver"
+    ROLE_ADMIN = "admin"
+
+    ROLE_CHOICES = [
+        (ROLE_PREPARER, "Preparer"),
+        (ROLE_REVIEWER, "Reviewer"),
+        (ROLE_APPROVER, "Approver"),
+        (ROLE_ADMIN, "Admin"),
+    ]
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="gexable_roles")
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+
+    class Meta:
+        unique_together = ("tenant_id", "user", "role")

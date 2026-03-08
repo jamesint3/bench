@@ -112,3 +112,19 @@ docker compose down
 ## Dependency lock strategy
 
 Use `gexable_esg/requirements-dev.lock` as the pinned dependency artifact for CI/dev reproducibility (generated via `pip-tools`).
+
+
+## Tenant & role headers
+
+API requests support:
+
+- `X-Tenant-ID`: tenant scope context for request/queryset filtering.
+- `X-User-Role`: one of `preparer`, `reviewer`, `approver`, `admin` for role-gated endpoints.
+
+## Outbox publisher worker
+
+Publish pending outbox events to the event bus:
+
+```bash
+python gexable_esg/apps/django_project/manage.py publish_outbox --once
+```

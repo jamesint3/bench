@@ -21,7 +21,7 @@ audit_logs = AuditLogRepository()
 
 
 def tenant_id_from_headers(request) -> str:
-    return request.headers.get("X-Tenant-ID", "default")
+    return getattr(request, "tenant_id", request.headers.get("X-Tenant-ID", "default"))
 
 
 def idempotency_key_from_headers(request) -> str:

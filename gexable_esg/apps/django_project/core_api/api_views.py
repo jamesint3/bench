@@ -2,10 +2,12 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from .permissions import RolePermission
 from .repositories import AuditLogRepository, DomainEventOutboxRepository
 from .serializers import ActivityRecordInSerializer, DisclosurePublishInSerializer, EmissionsCalculateInSerializer
 from .services import (
     activity_records,
+    bus,
     calculation,
     data_intake,
     disclosures,
@@ -13,7 +15,6 @@ from .services import (
     idempotency_key_from_headers,
     reporting,
     tenant_id_from_headers,
-    bus,
 )
 
 
@@ -25,11 +26,17 @@ def _validation_error(errors: dict) -> Response:
 
 
 class HealthAPIView(APIView):
+    permission_classes = [RolePermission]
+    required_roles = ["preparer", "reviewer", "approver", "admin"]
+
     def get(self, _request):
         return Response({"status": "ok", "version": "v1"})
 
 
 class ActivityRecordsAPIView(APIView):
+    permission_classes = [RolePermission]
+    required_roles = ["preparer", "reviewer", "approver", "admin"]
+
     def post(self, request):
         serializer = ActivityRecordInSerializer(data=request.data)
         if not serializer.is_valid():
@@ -72,6 +79,9 @@ class ActivityRecordsAPIView(APIView):
 
 
 class EmissionsCalculateAPIView(APIView):
+    permission_classes = [RolePermission]
+    required_roles = ["preparer", "reviewer", "approver", "admin"]
+
     def post(self, request):
         serializer = EmissionsCalculateInSerializer(data=request.data)
         if not serializer.is_valid():
@@ -114,6 +124,9 @@ class EmissionsCalculateAPIView(APIView):
 
 
 class DisclosuresPublishAPIView(APIView):
+    permission_classes = [RolePermission]
+    required_roles = ["reviewer", "approver", "admin"]
+
     def post(self, request):
         serializer = DisclosurePublishInSerializer(data=request.data)
         if not serializer.is_valid():
@@ -144,5 +157,8 @@ class DisclosuresPublishAPIView(APIView):
 
 
 class AuditEventsAPIView(APIView):
+    permission_classes = [RolePermission]
+    required_roles = ["reviewer", "approver", "admin"]
+
     def get(self, _request):
         return Response({"events": [e.model_dump() for e in bus.events]})
