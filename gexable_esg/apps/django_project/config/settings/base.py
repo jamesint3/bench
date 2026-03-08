@@ -20,6 +20,19 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "core_api",
+    "apps.core",
+    "apps.tenants",
+    "apps.users",
+    "apps.permissions",
+    "apps.data_ingestion",
+    "apps.emissions_management",
+    "apps.energy_management",
+    "apps.decarbonization",
+    "apps.supplier_intelligence",
+    "apps.audits_actions",
+    "apps.analytics",
+    "apps.reporting",
+    "apps.dashboard_api",
     "rest_framework",
     "drf_spectacular",
 ]
@@ -67,6 +80,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+AUTH_USER_MODEL = "users.User"
 
 
 REST_FRAMEWORK = {
