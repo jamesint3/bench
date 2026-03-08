@@ -1,1 +1,5 @@
-export const authEndpoints = { login: "/api/auth/login", logout: "/api/auth/logout", me: "/api/auth/me" };
+import { apiGet } from "./api";
+
+export function fetchMe() {
+  return apiGet<{ id: number; email: string } | { user: null }>("/auth/me");
+}
