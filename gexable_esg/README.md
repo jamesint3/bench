@@ -42,6 +42,17 @@ python -m gexable_esg.demo.run_demo
 
 This prints a JSON payload with created artifacts and emitted domain events.
 
+Generate deterministic demo data for all Django business modules (tenants/users/permissions, ingestion, emissions, energy, supplier, decarbonization, audits, analytics, reporting):
+
+```bash
+python gexable_esg/demo/generate_demo_data.py
+```
+
+This writes:
+
+- `gexable_esg/demo/demo_data_fixture.json` (Django fixture records)
+- `gexable_esg/demo/dashboard_api_demo_payloads.json` (dashboard endpoint sample payloads)
+
 
 ## Docker demo (one command)
 

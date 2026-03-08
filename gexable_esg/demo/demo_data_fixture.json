@@ -1,0 +1,725 @@
+[
+  {
+    "model": "tenants.tenant",
+    "pk": 1,
+    "fields": {
+      "name": "Acme ESG",
+      "slug": "acme-esg",
+      "industry": "manufacturing",
+      "country": "DE",
+      "timezone": "UTC",
+      "status": "active"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "email": "admin@acme-esg.demo",
+      "password_hash": "demo-not-for-prod",
+      "first_name": "Admin",
+      "last_name": "User",
+      "is_active": true,
+      "is_superuser": true
+    }
+  },
+  {
+    "model": "permissions.permission",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "key": "dashboard.view",
+      "module": "dashboard",
+      "action": "view",
+      "scope": "tenant"
+    }
+  },
+  {
+    "model": "permissions.role",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "tenant": 1,
+      "name": "esg_manager",
+      "description": "Demo ESG manager role"
+    }
+  },
+  {
+    "model": "permissions.rolepermission",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "role": 1,
+      "permission": 1
+    }
+  },
+  {
+    "model": "permissions.userroleassignment",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "user": 1,
+      "tenant": 1,
+      "role": 1,
+      "site": null
+    }
+  },
+  {
+    "model": "energy_management.site",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "name": "Berlin Plant",
+      "code": "BER-01",
+      "country": "DE",
+      "region": "Berlin",
+      "site_type": "manufacturing",
+      "floor_area_m2": "12000.00",
+      "production_unit": "widget",
+      "status": "active"
+    }
+  },
+  {
+    "model": "energy_management.meter",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "site": 1,
+      "meter_name": "Main Grid Meter",
+      "meter_type": "electricity",
+      "unit": "kWh",
+      "interval_minutes": 60,
+      "source_system": "utility_api",
+      "status": "active"
+    }
+  },
+  {
+    "model": "energy_management.meterreading",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "meter": 1,
+      "reading_timestamp": "2026-01-01T00:00:00Z",
+      "value": "325.500000",
+      "unit": "kWh",
+      "quality_flag": "validated",
+      "source_file_id": 1
+    }
+  },
+  {
+    "model": "energy_management.tariffplan",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "site": 1,
+      "name": "Industrial TOU",
+      "currency": "EUR",
+      "valid_from": "2026-01-01",
+      "valid_to": null
+    }
+  },
+  {
+    "model": "energy_management.utilitybill",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "site": 1,
+      "billing_period_start": "2026-01-01",
+      "billing_period_end": "2026-01-31",
+      "utility_type": "electricity",
+      "consumption": "86000.000000",
+      "consumption_unit": "kWh",
+      "cost_amount": "13350.00",
+      "currency": "EUR",
+      "demand_charge": "2000.00",
+      "source_file_id": 1
+    }
+  },
+  {
+    "model": "energy_management.renewableasset",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "site": 1,
+      "asset_type": "solar_pv",
+      "name": "Roof PV",
+      "capacity_kw": "600.00",
+      "commission_date": "2024-06-01",
+      "status": "active"
+    }
+  },
+  {
+    "model": "energy_management.batteryasset",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "site": 1,
+      "name": "Battery A",
+      "power_kw": "250.00",
+      "energy_kwh": "500.00",
+      "round_trip_efficiency": "92.00",
+      "status": "active"
+    }
+  },
+  {
+    "model": "supplier_intelligence.suppliercategory",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "name": "Logistics",
+      "description": "Transport partners"
+    }
+  },
+  {
+    "model": "supplier_intelligence.supplier",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "name": "Eco Logistics GmbH",
+      "supplier_category": 1,
+      "country": "DE",
+      "industry": "logistics",
+      "active_flag": true
+    }
+  },
+  {
+    "model": "supplier_intelligence.supplieractivityraw",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "supplier": 1,
+      "activity_date": "2026-01-10",
+      "activity_type": "road_freight",
+      "quantity": "14000.000000",
+      "unit": "tkm",
+      "spend_amount": "42000.00",
+      "currency": "EUR",
+      "source_file_id": 2
+    }
+  },
+  {
+    "model": "supplier_intelligence.supplierdisclosure",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "supplier": 1,
+      "period_start": "2026-01-01",
+      "period_end": "2026-03-31",
+      "emissions_tco2e": "75.200000",
+      "data_quality_score": "88.50"
+    }
+  },
+  {
+    "model": "supplier_intelligence.supplierscorecard",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "supplier": 1,
+      "period_start": "2026-01-01",
+      "period_end": "2026-03-31",
+      "score": "82.30",
+      "engagement_status": "active"
+    }
+  },
+  {
+    "model": "supplier_intelligence.supplierbenchmark",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "supplier": 1,
+      "period_start": "2026-01-01",
+      "period_end": "2026-03-31",
+      "emissions_intensity": "0.005300",
+      "peer_percentile": "74.00"
+    }
+  },
+  {
+    "model": "emissions_management.scopeclassification",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "code": "scope2",
+      "category": "Purchased electricity",
+      "description": "Grid electricity consumption"
+    }
+  },
+  {
+    "model": "emissions_management.emissionsource",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "name": "Grid power purchase",
+      "source_type": "electricity",
+      "scope_classification": 1
+    }
+  },
+  {
+    "model": "emissions_management.emissionfactor",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "factor_code": "IEA-DE-2026",
+      "scope": "scope2",
+      "category": "electricity",
+      "region": "DE",
+      "unit_from": "kWh",
+      "unit_to": "tco2e",
+      "factor_value": "0.00038000",
+      "factor_source": "IEA",
+      "valid_from": "2026-01-01",
+      "valid_to": null,
+      "version": "v2026"
+    }
+  },
+  {
+    "model": "emissions_management.emissionrecord",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "source": 1,
+      "factor": 1,
+      "activity_date": "2026-01-31",
+      "activity_amount": "86000.000000",
+      "activity_unit": "kWh",
+      "emissions_tco2e": "32.680000"
+    }
+  },
+  {
+    "model": "emissions_management.productfootprint",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "product_code": "WIDGET-X",
+      "product_name": "Widget X",
+      "period_start": "2026-01-01",
+      "period_end": "2026-03-31",
+      "emissions_tco2e": "120.300000",
+      "methodology": "GHG Protocol"
+    }
+  },
+  {
+    "model": "data_ingestion.datasource",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "name": "Utility CSV Drop",
+      "source_type": "csv",
+      "connection_ref": "s3://demo-bucket/utility"
+    }
+  },
+  {
+    "model": "data_ingestion.importjob",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "source": 1,
+      "status": "succeeded",
+      "started_at": "2026-01-02T08:00:00Z",
+      "completed_at": "2026-01-02T08:05:00Z",
+      "row_count": 900
+    }
+  },
+  {
+    "model": "data_ingestion.importfile",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "import_job": 1,
+      "file_name": "utility_jan.csv",
+      "file_uri": "s3://demo-bucket/utility/utility_jan.csv",
+      "checksum": "sha256-demo-001"
+    }
+  },
+  {
+    "model": "data_ingestion.validationissue",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "import_job": 1,
+      "severity": "warning",
+      "row_number": 87,
+      "field_name": "consumption",
+      "message": "Interpolated missing value"
+    }
+  },
+  {
+    "model": "data_ingestion.dataqualityscore",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "import_job": 1,
+      "completeness_score": "97.00",
+      "validity_score": "98.50",
+      "uniqueness_score": "99.00",
+      "overall_score": "98.17"
+    }
+  },
+  {
+    "model": "decarbonization.decarbonizationproject",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "site": 1,
+      "name": "Heat Pump Retrofit",
+      "category": "electrification",
+      "status": "in_progress",
+      "owner": 1,
+      "capex_amount": "450000.00",
+      "currency": "EUR",
+      "planned_start_date": "2026-02-01",
+      "planned_end_date": "2026-11-30",
+      "expected_abatement_tco2e": "180.000000",
+      "actual_abatement_tco2e": "42.000000"
+    }
+  },
+  {
+    "model": "decarbonization.projectmilestone",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "project": 1,
+      "title": "Engineering design",
+      "due_date": "2026-03-15",
+      "completed_at": "2026-03-10T09:00:00Z"
+    }
+  },
+  {
+    "model": "decarbonization.projectabatement",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "project": 1,
+      "period_start": "2026-02-01",
+      "period_end": "2026-02-28",
+      "expected_abatement_tco2e": "15.000000",
+      "actual_abatement_tco2e": "12.500000",
+      "cost_savings_amount": "4800.00"
+    }
+  },
+  {
+    "model": "decarbonization.emissiontarget",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "target_name": "2030 Scope 1+2",
+      "baseline_year": 2024,
+      "target_year": 2030,
+      "target_scope": "scope1+scope2",
+      "target_reduction_pct": "45.00",
+      "science_based_flag": true,
+      "status": "active"
+    }
+  },
+  {
+    "model": "decarbonization.scenariorun",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "name": "Accelerated electrification",
+      "assumptions": {
+        "carbon_price": 120,
+        "growth_pct": 4
+      },
+      "result_summary": {
+        "abatement_tco2e": 920.5,
+        "npv_eur": 2300000
+      }
+    }
+  },
+  {
+    "model": "audits_actions.audit",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "site": 1,
+      "name": "ISO 14001 Internal Audit",
+      "audit_type": "internal",
+      "audit_date": "2026-02-20",
+      "auditor_name": "R. Schmidt",
+      "status": "open"
+    }
+  },
+  {
+    "model": "audits_actions.auditfinding",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "audit": 1,
+      "site": 1,
+      "severity": "high",
+      "category": "energy",
+      "title": "Submeter coverage incomplete",
+      "description": "Line 3 and 4 submeters not integrated.",
+      "status": "open",
+      "due_date": "2026-04-15",
+      "owner": 1
+    }
+  },
+  {
+    "model": "audits_actions.correctiveaction",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "finding": 1,
+      "title": "Install missing submeters",
+      "description": "Procure and commission submeters for lines 3/4.",
+      "status": "in_progress",
+      "priority": "high",
+      "owner": 1,
+      "due_date": "2026-04-05",
+      "completed_at": null
+    }
+  },
+  {
+    "model": "audits_actions.actioncomment",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "action": 1,
+      "author": 1,
+      "comment": "Vendor selected and PO issued."
+    }
+  },
+  {
+    "model": "audits_actions.actionevidence",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "action": 1,
+      "file_name": "po-submeters.pdf",
+      "file_uri": "s3://demo-bucket/evidence/po-submeters.pdf"
+    }
+  },
+  {
+    "model": "analytics.factenergyconsumptiondaily",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "site": 1,
+      "date": "2026-01-31",
+      "energy_kwh": "86000.000000",
+      "peak_kw": "510.000000",
+      "offpeak_kwh": "24000.000000",
+      "renewable_kwh": "16200.000000",
+      "grid_import_kwh": "69800.000000",
+      "grid_export_kwh": "1100.000000",
+      "cost_amount": "13350.00",
+      "currency": "EUR"
+    }
+  },
+  {
+    "model": "analytics.factemissionsmonthly",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "site": 1,
+      "supplier": 1,
+      "year": 2026,
+      "month": 1,
+      "scope": "scope2",
+      "category": "electricity",
+      "activity_amount": "86000.000000",
+      "activity_unit": "kWh",
+      "emissions_tco2e": "32.680000",
+      "methodology": "market_based",
+      "factor_version": "v2026"
+    }
+  },
+  {
+    "model": "analytics.factsupplieremissions",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "supplier": 1,
+      "period_start": "2026-01-01",
+      "period_end": "2026-03-31",
+      "scope3_category": "category_4",
+      "emissions_tco2e": "75.200000",
+      "data_quality_score": "88.50",
+      "estimated_flag": false
+    }
+  },
+  {
+    "model": "analytics.facttariffcosts",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "site": 1,
+      "date": "2026-01-31",
+      "energy_charge": "9800.00",
+      "demand_charge": "2200.00",
+      "fixed_charge": "900.00",
+      "other_charge": "450.00",
+      "total_cost": "13350.00",
+      "currency": "EUR"
+    }
+  },
+  {
+    "model": "analytics.kpiemissionsoverview",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "period_type": "month",
+      "period_value": "2026-01",
+      "total_scope1_tco2e": "9.100000",
+      "total_scope2_tco2e": "32.680000",
+      "total_scope3_tco2e": "75.200000",
+      "total_emissions_tco2e": "116.980000",
+      "target_emissions_tco2e": "110.000000",
+      "variance_tco2e": "6.980000",
+      "last_refreshed_at": "2026-02-01T00:30:00Z"
+    }
+  },
+  {
+    "model": "analytics.kpienergysitemonthly",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "site": 1,
+      "year": 2026,
+      "month": 1,
+      "energy_kwh": "86000.000000",
+      "cost_amount": "13350.00",
+      "energy_intensity": "7.166700",
+      "peak_kw": "510.000000",
+      "renewable_share_pct": "18.84",
+      "last_refreshed_at": "2026-02-01T00:35:00Z"
+    }
+  },
+  {
+    "model": "analytics.kpirenewableperformance",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "site": 1,
+      "asset": 1,
+      "year": 2026,
+      "month": 1,
+      "generation_kwh": "16200.000000",
+      "self_consumption_pct": "92.50",
+      "export_kwh": "1100.000000",
+      "curtailment_kwh": "300.000000",
+      "availability_pct": "98.20"
+    }
+  },
+  {
+    "model": "analytics.kpisupplierbenchmark",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "supplier": 1,
+      "period_start": "2026-01-01",
+      "period_end": "2026-03-31",
+      "emissions_tco2e": "75.200000",
+      "emissions_intensity": "0.005300",
+      "data_quality_score": "88.50",
+      "peer_percentile": "74.00",
+      "engagement_status": "active"
+    }
+  },
+  {
+    "model": "analytics.kpiauditactions",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "site": 1,
+      "period_start": "2026-01-01",
+      "period_end": "2026-03-31",
+      "open_findings": 6,
+      "closed_findings": 11,
+      "overdue_actions": 2,
+      "closure_rate_pct": "64.71"
+    }
+  },
+  {
+    "model": "analytics.materializedviewrefreshlog",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "view_name": "mv_scope_trends_12m",
+      "started_at": "2026-02-01T00:25:00Z",
+      "completed_at": "2026-02-01T00:26:00Z",
+      "status": "succeeded",
+      "detail": "refresh complete"
+    }
+  },
+  {
+    "model": "analytics.forecastrun",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "model_name": "energy_baseline_v2",
+      "period_start": "2026-02-01",
+      "period_end": "2026-12-31",
+      "metrics": {
+        "mape": 0.08,
+        "annual_energy_kwh": 1020000
+      }
+    }
+  },
+  {
+    "model": "analytics.anomalyevent",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "source": "meter_readings",
+      "severity": "high",
+      "context": {
+        "meter_id": 1,
+        "z_score": 4.3,
+        "detected": "2026-02-03T05:00:00Z"
+      }
+    }
+  },
+  {
+    "model": "reporting.reporttemplate",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "name": "CSRD Monthly Pack",
+      "framework": "CSRD",
+      "file_format": "pdf",
+      "template_config": {
+        "sections": [
+          "emissions",
+          "energy",
+          "assurance"
+        ]
+      }
+    }
+  },
+  {
+    "model": "reporting.reportrun",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "template": 1,
+      "requested_by": 1,
+      "status": "completed",
+      "output_uri": "s3://demo-bucket/reports/csrd-2026-01.pdf",
+      "started_at": "2026-02-02T09:00:00Z",
+      "completed_at": "2026-02-02T09:04:00Z"
+    }
+  },
+  {
+    "model": "reporting.reportrecipient",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "report_run": 1,
+      "email": "board@acme-esg.demo",
+      "delivery_status": "sent"
+    }
+  },
+  {
+    "model": "reporting.exportjob",
+    "pk": 1,
+    "fields": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "report_run": 1,
+      "export_type": "csv",
+      "status": "completed",
+      "artifact_uri": "s3://demo-bucket/reports/csrd-2026-01.csv"
+    }
+  }
+]
