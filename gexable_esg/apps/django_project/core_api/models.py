@@ -40,6 +40,7 @@ class EmissionFactor(TenantStampedModel):
     valid_from = models.DateField(null=True, blank=True)
     valid_to = models.DateField(null=True, blank=True)
     source = models.CharField(max_length=255, default="internal")
+    version = models.CharField(max_length=50, default="v1")
 
 
 class EmissionResult(TenantStampedModel):
@@ -51,9 +52,36 @@ class EmissionResult(TenantStampedModel):
 
 
 class DisclosureReport(TenantStampedModel):
+    STATUS_DRAFT = "draft"
+    STATUS_IN_REVIEW = "in_review"
+    STATUS_APPROVED = "approved"
+    STATUS_PUBLISHED = "published"
+
+    STATUS_CHOICES = [
+        (STATUS_DRAFT, "Draft"),
+        (STATUS_IN_REVIEW, "In review"),
+        (STATUS_APPROVED, "Approved"),
+        (STATUS_PUBLISHED, "Published"),
+    ]
+
     framework = models.CharField(max_length=30)
     period = models.CharField(max_length=20)
-    status = models.CharField(max_length=20, default="draft")
+    status = models.CharField(max_length=20, default=STATUS_DRAFT, choices=STATUS_CHOICES)
+
+
+class DisclosureMetric(TenantStampedModel):
+    report = models.ForeignKey(DisclosureReport, on_delete=models.CASCADE, related_name="metrics")
+    metric_code = models.CharField(max_length=100)
+    metric_name = models.CharField(max_length=255)
+    metric_value = models.DecimalField(max_digits=18, decimal_places=6)
+    unit = models.CharField(max_length=30)
+
+
+class EvidenceFile(TenantStampedModel):
+    report = models.ForeignKey(DisclosureReport, on_delete=models.CASCADE, related_name="evidence_files")
+    file_name = models.CharField(max_length=255)
+    file_uri = models.TextField()
+    source_ref = models.CharField(max_length=120, blank=True, default="")
 
 
 class AuditLog(TenantStampedModel):
