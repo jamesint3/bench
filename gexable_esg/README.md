@@ -120,6 +120,24 @@ docker compose down
 ```
 
 
+
+### Using an existing Postgres container
+
+If you already run Postgres outside this compose stack (for example `docker run --name my_postgres ... -p 5432:5432 postgres`), keep it running and start only the app with DB overrides:
+
+```bash
+GEXABLE_DB_HOST=host.docker.internal \
+GEXABLE_DB_PORT=5432 \
+GEXABLE_DB_USER=postgres \
+GEXABLE_DB_PASSWORD='Polkmn001/*' \
+GEXABLE_DB_NAME=postgres \
+GEXABLE_SECRET_KEY='replace-with-a-strong-secret' \
+GEXABLE_ALLOWED_HOSTS='localhost,127.0.0.1' \
+docker compose up --build --no-deps gexable-esg-demo
+```
+
+> Note: this compose file no longer publishes TimescaleDB on host port `5432`, so it won't conflict with your existing container.
+
 ## Dependency lock strategy
 
 Use `gexable_esg/requirements-dev.lock` as the pinned dependency artifact for CI/dev reproducibility (generated via `pip-tools`).

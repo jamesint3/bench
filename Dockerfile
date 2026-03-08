@@ -7,10 +7,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
+COPY . .
+
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install --no-cache-dir . psycopg2-binary
-
-COPY . .
 
 EXPOSE 8000
 
