@@ -1,0 +1,18 @@
+services:
+  gexable-esg-demo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gexable-esg-demo
+    ports:
+      - "8000:8000"
+    environment:
+      GEXABLE_SECRET_KEY: "local-demo-secret"
+      GEXABLE_DEBUG: "true"
+      GEXABLE_ALLOWED_HOSTS: "localhost,127.0.0.1"
+      GEXABLE_DB_NAME: "/data/gexable_esg.sqlite3"
+    volumes:
+      - gexable_esg_data:/data
+
+volumes:
+  gexable_esg_data:

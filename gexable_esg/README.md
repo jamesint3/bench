@@ -39,3 +39,32 @@ python -m gexable_esg.demo.run_demo
 ```
 
 This prints a JSON payload with created artifacts and emitted domain events.
+
+
+## Docker demo (one command)
+
+From the repository root, run:
+
+```bash
+docker compose up --build
+```
+
+Then open:
+
+- Health: `http://localhost:8000/api/v1/health`
+
+Quick API smoke tests:
+
+```bash
+curl -s http://localhost:8000/api/v1/health
+curl -s -X POST http://localhost:8000/api/v1/activity-records \
+  -H "Content-Type: application/json" \
+  -d '{"site_id":"site-berlin-01","quantity":1200,"unit":"kWh"}'
+curl -s http://localhost:8000/api/v1/audit/events
+```
+
+To stop:
+
+```bash
+docker compose down
+```
