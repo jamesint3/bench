@@ -146,7 +146,7 @@ GEXABLE_DB_PASSWORD='Polkmn001/*' \
 GEXABLE_DB_NAME=postgres \
 GEXABLE_SECRET_KEY='replace-with-a-strong-secret' \
 GEXABLE_ALLOWED_HOSTS='localhost,127.0.0.1' \
-docker compose up --build --no-deps gexable-esg-demo
+docker compose up --build --no-deps gexable-esg-app
 ```
 
 On Windows `cmd.exe`, use quoted `set` syntax to avoid trailing spaces in env vars:
@@ -159,7 +159,7 @@ set "GEXABLE_DB_PASSWORD=Polkmn001/*" && ^
 set "GEXABLE_DB_NAME=postgres" && ^
 set "GEXABLE_SECRET_KEY=replace-with-a-strong-secret" && ^
 set "GEXABLE_ALLOWED_HOSTS=localhost,127.0.0.1" && ^
-docker compose up --build --no-deps gexable-esg-demo
+docker compose up --build --no-deps gexable-esg-app
 ```
 
 > Note: this compose file uses `/var/lib/postgresql` volume mounts (Postgres 18+ compatible) and no longer publishes TimescaleDB on host port `5432`, so it won't conflict with your existing container.

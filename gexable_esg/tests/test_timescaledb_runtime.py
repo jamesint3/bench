@@ -5,6 +5,9 @@ COMPOSE_FILE = Path("docker-compose.yml")
 SETTINGS_FILE = Path("gexable_esg/apps/django_project/config/settings/base.py")
 DOCKERFILE = Path("Dockerfile")
 BOOTSTRAP_SCRIPT = Path("gexable_esg/apps/django_project/scripts/bootstrap_runtime.sh")
+APPLY_SQL_ARTIFACTS_COMMAND = Path(
+    "gexable_esg/apps/django_project/core_api/management/commands/apply_sql_artifacts.py"
+)
 MAIN_SQL_ROOT = Path("gexable_esg/apps/django_project/db/sql")
 BLUEPRINT_SQL_ROOT = Path("blueprints/gexable_esg_app/backend/db/sql")
 
@@ -13,14 +16,22 @@ def test_compose_includes_timescaledb_service() -> None:
     source = COMPOSE_FILE.read_text()
     assert "timescaledb:" in source
     assert "timescale/timescaledb" in source
+    assert "gexable-esg-app:" in source
+    assert "container_name: gexable-esg-app" in source
     assert "GEXABLE_DB_ENGINE: \"postgresql\"" in source
 
 
 def test_runtime_bootstrap_runs_migrate_and_sql_artifacts() -> None:
     script = BOOTSTRAP_SCRIPT.read_text()
-    assert "manage.py migrate" in script
+    assert "manage.py migrate --run-syncdb" in script
     assert "manage.py apply_sql_artifacts" in script
     assert "wait_for_db.py" in script
+
+
+def test_apply_sql_artifacts_skips_timescaledb_when_unavailable() -> None:
+    source = APPLY_SQL_ARTIFACTS_COMMAND.read_text()
+    assert "timescaledb.control" in source
+    assert "Skipping SQL artifact because TimescaleDB is unavailable" in source
 
 
 def test_settings_support_postgresql_engine_switch() -> None:

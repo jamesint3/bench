@@ -16,11 +16,11 @@ services:
       timeout: 5s
       retries: 12
 
-  gexable-esg-demo:
+  gexable-esg-app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: gexable-esg-demo
+    container_name: gexable-esg-app
     depends_on:
       timescaledb:
         condition: service_healthy
