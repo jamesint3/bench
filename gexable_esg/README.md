@@ -49,6 +49,27 @@ From the repository root, run:
 docker compose up --build
 ```
 
+### Step-by-step (Windows + Visual Studio / VS Code)
+
+1. Open Docker Desktop and wait until it shows **Engine running**.
+2. Open this repository folder (the one containing `Dockerfile` and `docker-compose.yml`) in Visual Studio/VS Code.
+3. Open an integrated terminal in that root folder.
+4. Run:
+
+   ```bash
+   docker compose up --build
+   ```
+
+5. Wait for log output similar to: `Starting development server at http://0.0.0.0:8000/`.
+6. Open your browser at `http://localhost:8000/api/v1/health`.
+
+If you change code and want a clean rebuild:
+
+```bash
+docker compose down
+docker compose up --build --force-recreate
+```
+
 Then open:
 
 - Health: `http://localhost:8000/api/v1/health`

@@ -1,20 +1,18 @@
 FROM python:3.11-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
 
 WORKDIR /app
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends build-essential \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY pyproject.toml README.md LICENSE ./
-COPY bench ./bench
-COPY gexable_esg ./gexable_esg
-
+# Keep image simple/reliable for local demo builds on Docker Desktop.
 RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir .
+    && pip install --no-cache-dir "Django>=4.2,<6"
+
+# Copy full repository layout as shown in local setup
+# (e.g. bench/, docs/, gexable_esg/, pyproject.toml, etc.).
+COPY . .
 
 EXPOSE 8000
 
