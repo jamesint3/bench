@@ -23,10 +23,22 @@ def test_blueprint_apps_exist_with_core_files() -> None:
     for app in app_names:
         app_dir = BLUEPRINT_APPS / app
         assert app_dir.exists()
-        assert (app_dir / "models.py").exists()
-        assert (app_dir / "services.py").exists()
-        assert (app_dir / "selectors.py").exists()
-        assert (app_dir / "tasks.py").exists()
+        for file_name in (
+            "models.py",
+            "services.py",
+            "selectors.py",
+            "tasks.py",
+            "serializers.py",
+            "views.py",
+            "urls.py",
+            "filters.py",
+            "permissions.py",
+            "admin.py",
+            "apps.py",
+        ):
+            assert (app_dir / file_name).exists()
+        assert (app_dir / "tests").exists()
+        assert (app_dir / "migrations").exists()
 
 
 def test_blueprint_model_class_presence() -> None:
@@ -48,3 +60,12 @@ def test_blueprint_model_class_presence() -> None:
         source = (BLUEPRINT_APPS / rel_path).read_text()
         for name in names:
             assert f"class {name}(" in source
+
+
+def test_emissions_management_contains_layer_implementations() -> None:
+    base = BLUEPRINT_APPS / "emissions_management"
+    assert "class EmissionCalculationService:" in (base / "services.py").read_text()
+    assert "class EmissionSelectors:" in (base / "selectors.py").read_text()
+    assert "def refresh_tenant_emission_summary" in (base / "tasks.py").read_text()
+    assert "class EmissionRecordSerializer" in (base / "serializers.py").read_text()
+    assert "class EmissionRecordViewSet" in (base / "views.py").read_text()
