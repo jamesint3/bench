@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from .models import ActivityRecord, AuditLog, DisclosureReport, EmissionResult
+from .models import ActivityRecord, AuditLog, DisclosureReport, EmissionResult, DomainEventOutbox
 
 
 class ActivityRecordRepository:
@@ -64,3 +64,17 @@ class AuditLogRepository:
             entity_id=entity_id,
             payload=payload,
         )
+
+
+class DomainEventOutboxRepository:
+    def queue(self, *, tenant_id: str, topic: str, payload: dict, schema_version: str = "v1") -> DomainEventOutbox:
+        return DomainEventOutbox.objects.create(
+            tenant_id=tenant_id,
+            topic=topic,
+            payload=payload,
+            schema_version=schema_version,
+            status="pending",
+        )
+
+    def mark_published(self, event_id: int) -> None:
+        DomainEventOutbox.objects.filter(id=event_id).update(status="published")

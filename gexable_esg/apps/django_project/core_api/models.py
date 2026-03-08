@@ -56,3 +56,11 @@ class AuditLog(TenantStampedModel):
     entity_type = models.CharField(max_length=80)
     entity_id = models.CharField(max_length=100)
     payload = models.JSONField(default=dict)
+
+
+class DomainEventOutbox(TenantStampedModel):
+    topic = models.CharField(max_length=120)
+    payload = models.JSONField(default=dict)
+    schema_version = models.CharField(max_length=20, default="v1")
+    status = models.CharField(max_length=20, default="pending", db_index=True)
+    published_at = models.DateTimeField(null=True, blank=True)

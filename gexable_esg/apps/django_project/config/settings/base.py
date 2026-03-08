@@ -3,8 +3,13 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 
-SECRET_KEY = os.getenv("GEXABLE_SECRET_KEY", "gexable-esg-dev-key")
 DEBUG = os.getenv("GEXABLE_DEBUG", "false").lower() == "true"
+SECRET_KEY = os.getenv("GEXABLE_SECRET_KEY")
+if not SECRET_KEY:
+    if DEBUG:
+        SECRET_KEY = "gexable-esg-dev-key"
+    else:
+        raise RuntimeError("GEXABLE_SECRET_KEY must be set when DEBUG is false")
 ALLOWED_HOSTS = [h.strip() for h in os.getenv("GEXABLE_ALLOWED_HOSTS", "*").split(",") if h.strip()]
 
 INSTALLED_APPS = [
@@ -15,6 +20,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "core_api",
+    "rest_framework",
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
@@ -58,3 +65,13 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Gexable ESG API",
+    "VERSION": "0.1.0",
+}

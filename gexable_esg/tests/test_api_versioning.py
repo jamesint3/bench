@@ -20,3 +20,9 @@ def test_ui_routes_configured() -> None:
 def test_admin_route_configured() -> None:
     urls = Path("gexable_esg/apps/django_project/config/urls.py").read_text()
     assert 'path("admin/", admin.site.urls)' in urls
+
+
+def test_api_docs_routes_configured() -> None:
+    urls = Path("gexable_esg/apps/django_project/core_api/urls.py").read_text()
+    assert 'path("schema"' in urls
+    assert 'path("docs"' in urls

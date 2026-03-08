@@ -7,6 +7,8 @@ This plan translates the current Django scaffold into a production-ready ESG pla
 - ✅ Week 0 started: settings split (`base/dev/prod`), `.env.example`, and initial baseline structure are in place.
 - ✅ Week 1 started: API versioning (`/api/v1`), validation helpers, and standardized error responses are implemented.
 - ✅ Week 2 started: core persistence models, initial migration, repositories, and audit logging hooks are added.
+- ✅ Week 1 progressed: DRF APIViews, serializers, standardized validation responses, and OpenAPI/Swagger endpoints (`/api/v1/schema`, `/api/v1/docs`) are added.
+- ✅ Week 3 started: transactional outbox table (`DomainEventOutbox`) and repository stub for publish lifecycle are added.
 - ⏭️ Remaining items below are still planned and should be completed in subsequent iterations.
 
 ## 0) Immediate Baseline Hardening (Week 1)

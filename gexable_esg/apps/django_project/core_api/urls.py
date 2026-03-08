@@ -1,11 +1,14 @@
 from django.urls import path
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-from . import views
+from .api_views import AuditEventsAPIView, DisclosuresPublishAPIView, EmissionsCalculateAPIView, HealthAPIView, ActivityRecordsAPIView
 
 urlpatterns = [
-    path("health", views.health, name="health"),
-    path("activity-records", views.ingest_activity_record, name="activity-records"),
-    path("emissions/calculate", views.calculate_emissions, name="emissions-calculate"),
-    path("disclosures/publish", views.publish_disclosure, name="disclosures-publish"),
-    path("audit/events", views.list_events, name="audit-events"),
+    path("schema", SpectacularAPIView.as_view(), name="schema"),
+    path("docs", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
+    path("health", HealthAPIView.as_view(), name="health"),
+    path("activity-records", ActivityRecordsAPIView.as_view(), name="activity-records"),
+    path("emissions/calculate", EmissionsCalculateAPIView.as_view(), name="emissions-calculate"),
+    path("disclosures/publish", DisclosuresPublishAPIView.as_view(), name="disclosures-publish"),
+    path("audit/events", AuditEventsAPIView.as_view(), name="audit-events"),
 ]

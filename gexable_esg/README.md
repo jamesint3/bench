@@ -22,6 +22,8 @@ python gexable_esg/apps/django_project/manage.py runserver
 - `POST /api/v1/emissions/calculate`
 - `POST /api/v1/disclosures/publish`
 - `GET /api/v1/audit/events`
+- `GET /api/v1/schema` (OpenAPI schema)
+- `GET /api/v1/docs` (Swagger UI)
 
 > Note: persistence for `activity-records` and `emissions/calculate` requires numeric DB foreign keys (`site_id`, `activity_record_id`) to store records.
 
@@ -105,3 +107,8 @@ To stop:
 ```bash
 docker compose down
 ```
+
+
+## Dependency lock strategy
+
+Use `gexable_esg/requirements-dev.lock` as the pinned dependency artifact for CI/dev reproducibility (generated via `pip-tools`).
