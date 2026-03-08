@@ -10,18 +10,16 @@ class Tenant(TimeStampedMixin):
     industry = models.CharField(max_length=120, blank=True, default="")
     country = models.CharField(max_length=2)
     timezone = models.CharField(max_length=80, default="UTC")
-    subscription_tier = models.CharField(max_length=20, choices=SubscriptionTier.choices, default=SubscriptionTier.STARTER)
     status = models.CharField(max_length=20, choices=RecordStatus.choices, default=RecordStatus.ACTIVE)
 
-    def __str__(self) -> str:
-        return self.name
+    class Meta:
+        db_table = "tenants"
 
 
 class TenantSettings(TimeStampedMixin):
     tenant = models.OneToOneField(Tenant, on_delete=models.CASCADE, related_name="settings")
+    subscription_tier = models.CharField(max_length=20, choices=SubscriptionTier.choices, default=SubscriptionTier.STARTER)
     brand_name = models.CharField(max_length=255, blank=True, default="")
-    primary_color = models.CharField(max_length=20, blank=True, default="#1F2937")
-    secondary_color = models.CharField(max_length=20, blank=True, default="#4B5563")
     logo_url = models.URLField(blank=True, default="")
     locale = models.CharField(max_length=20, default="en")
 

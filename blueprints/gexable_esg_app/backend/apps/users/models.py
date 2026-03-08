@@ -1,12 +1,20 @@
-from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from apps.core.models import TenantStampedModel, TimeStampedMixin
+from apps.core.models import TimeStampedMixin
 
 
-class User(AbstractUser):
+class User(models.Model):
     email = models.EmailField(unique=True)
-    preferred_timezone = models.CharField(max_length=80, default="UTC")
+    password_hash = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=150, blank=True, default="")
+    last_name = models.CharField(max_length=150, blank=True, default="")
+    is_active = models.BooleanField(default=True)
+    is_superuser = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = "users"
 
 
 class UserProfile(TimeStampedMixin):
@@ -16,11 +24,13 @@ class UserProfile(TimeStampedMixin):
     phone = models.CharField(max_length=50, blank=True, default="")
 
 
-class UserTenantMembership(TenantStampedModel):
+class UserTenantMembership(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tenant_memberships")
     tenant = models.ForeignKey("tenants.Tenant", on_delete=models.CASCADE, related_name="user_memberships")
+    role = models.ForeignKey("permissions.Role", on_delete=models.PROTECT, related_name="membership_links")
     is_default = models.BooleanField(default=False)
-    status = models.CharField(max_length=20, default="active")
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ("user", "tenant")
+        db_table = "user_tenant_memberships"
+        unique_together = ("user", "tenant", "role")

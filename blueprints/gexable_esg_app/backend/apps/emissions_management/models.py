@@ -18,13 +18,19 @@ class EmissionSource(TenantStampedModel):
 
 class EmissionFactor(TenantStampedModel):
     factor_code = models.CharField(max_length=120)
+    scope = models.CharField(max_length=20, choices=ScopeType.choices)
+    category = models.CharField(max_length=120)
     region = models.CharField(max_length=80)
     unit_from = models.CharField(max_length=30)
     unit_to = models.CharField(max_length=30, default="tco2e")
     factor_value = models.DecimalField(max_digits=18, decimal_places=8)
+    factor_source = models.CharField(max_length=255, blank=True, default="")
     valid_from = models.DateField(null=True, blank=True)
     valid_to = models.DateField(null=True, blank=True)
     version = models.CharField(max_length=50, default="v1")
+
+    class Meta:
+        db_table = "emission_factor_library"
 
 
 class EmissionRecord(TenantStampedModel):

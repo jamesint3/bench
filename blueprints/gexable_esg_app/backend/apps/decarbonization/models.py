@@ -8,9 +8,16 @@ class DecarbonizationProject(TenantStampedModel):
     name = models.CharField(max_length=255)
     category = models.CharField(max_length=80)
     status = models.CharField(max_length=30, default="planned")
-    owner = models.ForeignKey("users.User", null=True, blank=True, on_delete=models.SET_NULL)
+    owner = models.ForeignKey("users.User", on_delete=models.PROTECT)
     capex_amount = models.DecimalField(max_digits=18, decimal_places=2, null=True, blank=True)
-    currency = models.CharField(max_length=3, default="USD")
+    currency = models.CharField(max_length=3, null=True, blank=True)
+    planned_start_date = models.DateField()
+    planned_end_date = models.DateField()
+    expected_abatement_tco2e = models.DecimalField(max_digits=18, decimal_places=6, null=True, blank=True)
+    actual_abatement_tco2e = models.DecimalField(max_digits=18, decimal_places=6, null=True, blank=True)
+
+    class Meta:
+        db_table = "decarbonization_projects"
 
 
 class ProjectMilestone(TenantStampedModel):
@@ -26,6 +33,10 @@ class ProjectAbatement(TenantStampedModel):
     period_end = models.DateField()
     expected_abatement_tco2e = models.DecimalField(max_digits=18, decimal_places=6)
     actual_abatement_tco2e = models.DecimalField(max_digits=18, decimal_places=6)
+    cost_savings_amount = models.DecimalField(max_digits=18, decimal_places=2, null=True, blank=True)
+
+    class Meta:
+        db_table = "fact_project_abatement"
 
 
 class EmissionTarget(TenantStampedModel):
@@ -36,6 +47,9 @@ class EmissionTarget(TenantStampedModel):
     target_reduction_pct = models.DecimalField(max_digits=6, decimal_places=2)
     science_based_flag = models.BooleanField(default=False)
     status = models.CharField(max_length=30, default="active")
+
+    class Meta:
+        db_table = "emission_targets"
 
 
 class ScenarioRun(TenantStampedModel):

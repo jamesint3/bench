@@ -11,6 +11,9 @@ class Audit(TenantStampedModel):
     auditor_name = models.CharField(max_length=255)
     status = models.CharField(max_length=30, default="open")
 
+    class Meta:
+        db_table = "audits"
+
 
 class AuditFinding(TenantStampedModel):
     audit = models.ForeignKey(Audit, on_delete=models.CASCADE, related_name="findings")
@@ -23,6 +26,9 @@ class AuditFinding(TenantStampedModel):
     due_date = models.DateField(null=True, blank=True)
     owner = models.ForeignKey("users.User", null=True, blank=True, on_delete=models.SET_NULL)
 
+    class Meta:
+        db_table = "audit_findings"
+
 
 class CorrectiveAction(TenantStampedModel):
     finding = models.ForeignKey(AuditFinding, on_delete=models.CASCADE, related_name="actions")
@@ -33,6 +39,9 @@ class CorrectiveAction(TenantStampedModel):
     owner = models.ForeignKey("users.User", on_delete=models.PROTECT)
     due_date = models.DateField()
     completed_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        db_table = "corrective_actions"
 
 
 class ActionComment(TenantStampedModel):

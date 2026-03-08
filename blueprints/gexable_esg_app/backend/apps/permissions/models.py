@@ -9,18 +9,13 @@ class Role(TenantStampedModel):
     description = models.TextField(blank=True, default="")
 
     class Meta:
+        db_table = "roles"
         unique_together = ("tenant", "name")
 
 
 class Permission(TenantStampedModel):
-    MODULE_CHOICES = [
-        ("dashboard", "Dashboard"),
-        ("reporting", "Reporting"),
-        ("exports", "Exports"),
-        ("site", "Site"),
-    ]
     key = models.CharField(max_length=120, unique=True)
-    module = models.CharField(max_length=40, choices=MODULE_CHOICES)
+    module = models.CharField(max_length=40)
     action = models.CharField(max_length=40)
     scope = models.CharField(max_length=40, default="tenant")
 

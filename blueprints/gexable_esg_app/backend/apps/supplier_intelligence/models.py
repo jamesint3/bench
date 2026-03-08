@@ -10,10 +10,33 @@ class SupplierCategory(TenantStampedModel):
 
 class Supplier(TenantStampedModel):
     name = models.CharField(max_length=255)
-    category = models.ForeignKey(SupplierCategory, null=True, blank=True, on_delete=models.SET_NULL, related_name="suppliers")
+    supplier_category = models.ForeignKey(
+        SupplierCategory,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="suppliers",
+    )
     country = models.CharField(max_length=2, blank=True, default="")
     industry = models.CharField(max_length=120, blank=True, default="")
     active_flag = models.BooleanField(default=True)
+
+    class Meta:
+        db_table = "suppliers"
+
+
+class SupplierActivityRaw(TenantStampedModel):
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, related_name="activity_rows")
+    activity_date = models.DateField()
+    activity_type = models.CharField(max_length=80)
+    quantity = models.DecimalField(max_digits=18, decimal_places=6)
+    unit = models.CharField(max_length=30)
+    spend_amount = models.DecimalField(max_digits=18, decimal_places=2, null=True, blank=True)
+    currency = models.CharField(max_length=3, null=True, blank=True)
+    source_file_id = models.BigIntegerField(null=True, blank=True)
+
+    class Meta:
+        db_table = "supplier_activity_raw"
 
 
 class SupplierDisclosure(TenantStampedModel):
