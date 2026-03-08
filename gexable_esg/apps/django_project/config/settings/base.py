@@ -66,12 +66,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.getenv("GEXABLE_DB_NAME", str(BASE_DIR / "db.sqlite3")),
+DB_ENGINE = os.getenv("GEXABLE_DB_ENGINE", "sqlite3").lower()
+if DB_ENGINE in {"postgres", "postgresql", "timescaledb"}:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("GEXABLE_DB_NAME", "gexable_esg"),
+            "USER": os.getenv("GEXABLE_DB_USER", "gexable"),
+            "PASSWORD": os.getenv("GEXABLE_DB_PASSWORD", "gexable"),
+            "HOST": os.getenv("GEXABLE_DB_HOST", "localhost"),
+            "PORT": os.getenv("GEXABLE_DB_PORT", "5432"),
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.getenv("GEXABLE_DB_NAME", str(BASE_DIR / "db.sqlite3")),
+        }
+    }
 
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
