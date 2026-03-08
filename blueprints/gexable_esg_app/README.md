@@ -1,24 +1,56 @@
 # Gexable ESG Commercial Blueprint (Non-invasive Scaffold)
 
-This directory is an **implementation blueprint** for a commercial Django + React ESG platform.
+This blueprint has been updated to mirror the requested commercial structure while remaining isolated from the active runtime under `gexable_esg/`.
 
-- It is intentionally isolated under `blueprints/`.
-- It does **not** modify the active runtime app in `gexable_esg/`.
-- It provides a practical target structure, schema map, endpoint map, and starter model examples.
+## Scope and safety
 
-## Core Principle
+- Lives entirely under `blueprints/gexable_esg_app/`.
+- Does **not** change the current Django runtime entrypoints.
+- Serves as a migration target for phased adoption.
 
-`raw data -> processing jobs -> fact/kpi/materialized views -> API -> dashboards`
+## Current blueprint layout
 
-## Included
+```text
+gexable_esg_app/
+├── backend/
+│   ├── manage.py
+│   ├── pyproject.toml
+│   ├── requirements/{base,dev,prod}.txt
+│   ├── config/{urls,asgi,wsgi,celery}.py
+│   ├── config/settings/{base,dev,prod}.py
+│   ├── apps/
+│   │   ├── core/
+│   │   ├── tenants/
+│   │   ├── users/
+│   │   ├── permissions/
+│   │   ├── audit_log/
+│   │   ├── data_ingestion/
+│   │   ├── emissions_management/
+│   │   ├── energy_management/
+│   │   ├── decarbonization/
+│   │   ├── supplier_intelligence/
+│   │   ├── audits_actions/
+│   │   ├── analytics/
+│   │   ├── reporting/
+│   │   └── dashboard_api/
+│   ├── modules/
+│   ├── db/sql/{materialized_views,functions,indexes}
+│   ├── db/seeds/
+│   ├── scripts/
+│   ├── tests/{unit,integration,api,analytics}
+│   └── static/
+├── frontend/
+│   ├── package.json
+│   ├── src/{app,pages,modules,components,charts,tables,hooks,services,store,utils,types}
+│   └── public/
+├── infra/
+│   ├── docker/{backend.Dockerfile,frontend.Dockerfile,nginx.conf}
+│   ├── compose/{docker-compose.dev.yml,docker-compose.prod.yml}
+│   └── k8s/
+├── docs/{architecture,api,data-model,product}
+└── .env.example
+```
 
-- `backend/`: recommended Django monorepo backend layout with app boundaries.
-- `frontend/`: recommended React frontend module layout.
-- `infra/`: docker/compose/k8s placeholder layout.
-- `docs/`: architecture, API, and data-model blueprint docs.
+## Design rule
 
-## How to use
-
-1. Use this as a migration roadmap, not as an in-place replacement.
-2. Incrementally move existing code into these module boundaries.
-3. Keep tenant isolation and role-based access explicit on all domain entities.
+`raw data -> processing jobs -> fact/kpi/materialized views -> API -> dashboard`

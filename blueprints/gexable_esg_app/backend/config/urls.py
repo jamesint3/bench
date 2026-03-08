@@ -1,0 +1,1 @@
+"""Blueprint URL config placeholder."""
