@@ -80,6 +80,7 @@ docker compose up
 
 Then open:
 
+- UI: `http://localhost:8000/`
 - Health: `http://localhost:8000/api/v1/health`
 
 Quick API smoke tests:

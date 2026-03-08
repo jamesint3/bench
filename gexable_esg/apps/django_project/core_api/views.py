@@ -1,6 +1,7 @@
 import json
 
 from django.http import HttpRequest, JsonResponse
+from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from .errors import error_response
@@ -133,3 +134,7 @@ def publish_disclosure(request: HttpRequest) -> JsonResponse:
 
 def list_events(_request: HttpRequest) -> JsonResponse:
     return JsonResponse({"events": [e.model_dump() for e in bus.events]})
+
+
+def home(request: HttpRequest):
+    return render(request, "core_api/index.html")
