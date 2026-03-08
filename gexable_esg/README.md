@@ -70,6 +70,14 @@ docker compose down
 docker compose up --build --force-recreate
 ```
 
+If you previously saw `ModuleNotFoundError: No module named 'gexable_esg'`, run a no-cache rebuild:
+
+```bash
+docker compose down
+docker compose build --no-cache
+docker compose up
+```
+
 Then open:
 
 - Health: `http://localhost:8000/api/v1/health`
