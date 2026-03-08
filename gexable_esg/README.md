@@ -80,8 +80,15 @@ docker compose up
 
 Then open:
 
-- UI: `http://localhost:8000/`
-- Health: `http://localhost:8000/api/v1/health`
+- UI Home: `http://localhost:8000/`
+- Data Intake UI: `http://localhost:8000/ui/data-intake`
+- Emissions UI: `http://localhost:8000/ui/emissions`
+- Disclosures UI: `http://localhost:8000/ui/disclosures`
+- Events UI: `http://localhost:8000/ui/events`
+- Health UI: `http://localhost:8000/ui/health`
+- Admin Portal UI: `http://localhost:8000/ui/admin-portal`
+- Django Admin: `http://localhost:8000/admin/`
+- API Health: `http://localhost:8000/api/v1/health`
 
 Quick API smoke tests:
 

@@ -1,0 +1,19 @@
+{% extends "core_api/base.html" %}
+{% block content %}
+<h1>Data Intake</h1>
+<div class="card">
+  <input id="site_id" value="site-berlin-01" placeholder="site_id" />
+  <input id="quantity" value="1200" placeholder="quantity" />
+  <input id="unit" value="kWh" placeholder="unit" />
+  <button id="submit">Submit Activity Record</button>
+</div>
+<div class="card"><pre id="out"></pre></div>
+<script>
+const out=document.getElementById('out');
+document.getElementById('submit').onclick=async()=>{
+ const payload={site_id:site_id.value,quantity:Number(quantity.value),unit:unit.value};
+ const res=await fetch('/api/v1/activity-records',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+ out.textContent=JSON.stringify(await res.json(),null,2);
+};
+</script>
+{% endblock %}

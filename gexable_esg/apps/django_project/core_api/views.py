@@ -138,3 +138,27 @@ def list_events(_request: HttpRequest) -> JsonResponse:
 
 def home(request: HttpRequest):
     return render(request, "core_api/index.html")
+
+
+def ui_data_intake(request: HttpRequest):
+    return render(request, "core_api/data_intake.html")
+
+
+def ui_emissions(request: HttpRequest):
+    return render(request, "core_api/emissions.html")
+
+
+def ui_disclosures(request: HttpRequest):
+    return render(request, "core_api/disclosures.html")
+
+
+def ui_events(request: HttpRequest):
+    return render(request, "core_api/events.html")
+
+
+def ui_health(request: HttpRequest):
+    return render(request, "core_api/health.html")
+
+
+def ui_admin_portal(request: HttpRequest):
+    return render(request, "core_api/admin_portal.html")

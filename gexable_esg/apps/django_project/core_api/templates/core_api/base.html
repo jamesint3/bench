@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Gexable ESG Demo{% endblock %}</title>
+    <style>
+      body { font-family: Arial, sans-serif; background:#0b1220; color:#e5e7eb; margin:0; }
+      .wrap { max-width: 1080px; margin: 2rem auto; padding: 1rem 1.5rem; }
+      .card { background:#111827; border:1px solid #374151; border-radius:12px; padding:1rem; margin-bottom:1rem; }
+      h1,h2,h3 { margin:.2rem 0 1rem; }
+      .muted { color:#9ca3af; }
+      .grid { display:grid; grid-template-columns: repeat(2, 1fr); gap:1rem; }
+      .grid3 { display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem; }
+      button { background:#2563eb; color:white; border:none; border-radius:8px; padding:.6rem .9rem; cursor:pointer; }
+      input,select { width:100%; background:#030712; color:#e5e7eb; border:1px solid #374151; border-radius:8px; padding:.5rem; margin-bottom:.6rem; }
+      pre { background:#030712; border-radius:8px; padding: .8rem; overflow:auto; min-height:120px; }
+      nav { margin-bottom:1rem; display:flex; flex-wrap:wrap; gap:.5rem; }
+      nav a { color:#93c5fd; text-decoration:none; background:#111827; border:1px solid #374151; border-radius:8px; padding:.35rem .6rem; }
+      a { color:#93c5fd; }
+      @media (max-width: 900px) { .grid, .grid3 { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <nav>
+        <a href="/">Home</a>
+        <a href="/ui/data-intake">Data Intake</a>
+        <a href="/ui/emissions">Emissions</a>
+        <a href="/ui/disclosures">Disclosures</a>
+        <a href="/ui/events">Events</a>
+        <a href="/ui/health">Health</a>
+        <a href="/ui/admin-portal">Admin Portal</a>
+      </nav>
+      {% block content %}{% endblock %}
+    </div>
+  </body>
+</html>
