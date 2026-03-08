@@ -1,0 +1,6 @@
+# Lockfile strategy (generated in CI/dev):
+#   python -m pip install pip-tools
+#   pip-compile --generate-hashes -o gexable_esg/requirements-dev.lock pyproject.toml
+#
+# This repository currently tracks this file to document and stabilize dependency resolution
+# for local and CI environments.
