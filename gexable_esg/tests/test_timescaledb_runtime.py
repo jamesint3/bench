@@ -34,10 +34,24 @@ def test_apply_sql_artifacts_skips_timescaledb_when_unavailable() -> None:
     assert "Skipping SQL artifact because TimescaleDB is unavailable" in source
 
 
+def test_apply_sql_artifacts_skips_missing_relation_dependencies() -> None:
+    source = APPLY_SQL_ARTIFACTS_COMMAND.read_text()
+    assert '"does not exist" in message and "relation" in message' in source
+    assert "Skipping SQL artifact because dependent tables are unavailable" in source
+
+
 def test_settings_support_postgresql_engine_switch() -> None:
     source = SETTINGS_FILE.read_text()
     assert 'DB_ENGINE = _env("GEXABLE_DB_ENGINE", "sqlite3").lower()' in source
     assert '"ENGINE": "django.db.backends.postgresql"' in source
+
+
+def test_settings_mark_unmigrated_local_apps_for_syncdb() -> None:
+    source = SETTINGS_FILE.read_text()
+    assert "UNMIGRATED_LOCAL_APPS" in source
+    assert '"analytics"' in source
+    assert '"audits_actions"' in source
+    assert "MIGRATION_MODULES = {app_label: None for app_label in UNMIGRATED_LOCAL_APPS}" in source
 
 
 def test_dockerfile_uses_runtime_bootstrap_script() -> None:

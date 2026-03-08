@@ -168,6 +168,8 @@ docker compose up --build --no-deps gexable-esg-app
 
 > Note: if you see `could not translate host name "host.docker.internal "`, your env var likely contains a trailing space from `set VAR=value &&` usage in cmd; use `set "VAR=value"` as shown above.
 
+> Note: when running against a plain PostgreSQL instance (without full Timescale/materialized-view prerequisites), runtime SQL artifacts that depend on unavailable extensions or missing base relations are skipped with warnings so the API can still boot.
+
 
 ## Dependency lock strategy
 

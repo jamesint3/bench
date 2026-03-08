@@ -100,6 +100,23 @@ STATIC_URL = "/static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "users.User"
 
+# Many domain apps currently ship without Django migration files in this scaffold.
+# Mark them as unmigrated so `migrate --run-syncdb` can create their tables at runtime.
+UNMIGRATED_LOCAL_APPS = [
+    "core",
+    "tenants",
+    "permissions",
+    "data_ingestion",
+    "emissions_management",
+    "energy_management",
+    "decarbonization",
+    "supplier_intelligence",
+    "audits_actions",
+    "analytics",
+    "reporting",
+    "dashboard_api",
+]
+MIGRATION_MODULES = {app_label: None for app_label in UNMIGRATED_LOCAL_APPS}
 
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",

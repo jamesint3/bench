@@ -34,12 +34,22 @@ class Command(BaseCommand):
                     cursor.execute(sql_file.read_text())
                 except DatabaseError as exc:
                     message = str(exc)
+                    relative_path = sql_file.relative_to(root.parent)
                     if "timescaledb.control" in message:
                         skipped_files.append(sql_file)
                         self.stdout.write(
                             self.style.WARNING(
                                 "Skipping SQL artifact because TimescaleDB is unavailable: "
-                                f"{sql_file.relative_to(root.parent)}"
+                                f"{relative_path}"
+                            )
+                        )
+                        continue
+                    if "does not exist" in message and "relation" in message:
+                        skipped_files.append(sql_file)
+                        self.stdout.write(
+                            self.style.WARNING(
+                                "Skipping SQL artifact because dependent tables are unavailable: "
+                                f"{relative_path}"
                             )
                         )
                         continue
@@ -49,7 +59,7 @@ class Command(BaseCommand):
             self.stdout.write(
                 self.style.WARNING(
                     f"Applied {len(sql_files) - len(skipped_files)} SQL artifact files; "
-                    f"skipped {len(skipped_files)} TimescaleDB-dependent file(s)."
+                    f"skipped {len(skipped_files)} file(s) due to unavailable DB features or relations."
                 )
             )
             return
