@@ -126,7 +126,17 @@ docker compose down
 
 ### Using an existing Postgres container
 
-If you already run Postgres outside this compose stack (for example `docker run --name my_postgres ... -p 5432:5432 postgres`), keep it running and start only the app with DB overrides:
+If you already run Postgres outside this compose stack, use a Postgres 18+-safe data mount. Example:
+
+```bash
+docker run --name my_postgres \
+  -e POSTGRES_PASSWORD=Polkmn001/* \
+  -p 5432:5432 \
+  -v postgres_data:/var/lib/postgresql \
+  -d postgres
+```
+
+Then keep it running and start only the app with DB overrides:
 
 ```bash
 GEXABLE_DB_HOST=host.docker.internal \
@@ -139,7 +149,10 @@ GEXABLE_ALLOWED_HOSTS='localhost,127.0.0.1' \
 docker compose up --build --no-deps gexable-esg-demo
 ```
 
-> Note: this compose file no longer publishes TimescaleDB on host port `5432`, so it won't conflict with your existing container.
+> Note: this compose file uses `/var/lib/postgresql` volume mounts (Postgres 18+ compatible) and no longer publishes TimescaleDB on host port `5432`, so it won't conflict with your existing container.
+
+> Note: if you previously initialized data with `/var/lib/postgresql/data` on newer Postgres images, create a fresh volume or perform a proper `pg_upgrade` migration before reusing data.
+
 
 ## Dependency lock strategy
 

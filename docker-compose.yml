@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: gexable
       POSTGRES_PASSWORD: gexable
     volumes:
-      - gexable_timescaledb_data:/var/lib/postgresql/data
+      - gexable_timescaledb_data:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U gexable -d gexable_esg"]
       interval: 10s
