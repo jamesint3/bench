@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: baseapp
+  namespace: baseapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: baseapp
+  template:
+    metadata:
+      labels:
+        app: baseapp
+    spec:
+      containers:
+        - name: baseapp
+          image: ghcr.io/your-org/baseapp:0.0.1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_URL
+              value: jdbc:postgresql://postgres:5432/baseapp
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka:9092
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://otel-collector:4318/v1/traces
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: baseapp
+  namespace: baseapp
+spec:
+  selector:
+    app: baseapp
+  ports:
+    - port: 80
+      targetPort: 8080
